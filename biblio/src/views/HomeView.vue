@@ -25,38 +25,41 @@
       <div class="virsraksti">
         Populārākie Žanri
       </div>
+      <div class="genre-section">
+        <div v-for="genre in genres" :key="genre.name" class="genre-card" @click="selectGenre(genre.name)">
+          <img :src="genre.image" :alt="genre.name" class="genre-image" />
+          <div class="genre-name">{{ genre.name }}</div>
+        </div>
+      </div>
     </main>
     <Footer />
   </div>
 </template>
 
 <script>
-import Navbar from '../components/Navbar.vue';
-import Footer from '../components/Footer.vue';
-// SLIDER SAKUMS SLIDER SAKUMS SLIDER SAKUMS SLIDER SAKUMS SLIDER SAKUMS
+import Navbar from "../components/Navbar.vue";
+import Footer from "../components/Footer.vue";
+
 export default {
   components: {
     Navbar,
-    Footer
+    Footer,
   },
   data() {
     return {
       currentSlide: 0,
       slides: [
-        {
-          src: '/img/hand-drawn-book-club-facebook-cover-b.png',
-          //src: '..\src\assets\img\hand-drawn-book-club-facebook-cover-b.png',
-          // caption: 'World Book Day Celebration'
-        },
-        {
-          src: '/img/hand-drawn-book-club-twitch-banner-template.png',
-          // caption: 'Join Our Book Club'
-        },
-        {
-          src: '/img/1.jpg',
-          // caption: 'Explore New Genres'
-        }
-      ]
+        { src: "/img/hand-drawn-book-club-facebook-cover-b.png" },
+        { src: "/img/hand-drawn-book-club-twitch-banner-template.png" },
+        { src: "/img/1.jpg" },
+      ],
+      genres: [
+        { name: "Fantāzija", image: "/img/fantasy.jpg" },
+        { name: "Detektīvi", image: "/img/detective.jpg" },
+        { name: "Romāni", image: "/img/romance.jpg" },
+        { name: "Zinātniskā fantastika", image: "/img/scifi.jpg" },
+        { name: "Vēsturiskie", image: "/img/history.jpg" },
+      ],
     };
   },
   methods: {
@@ -65,13 +68,15 @@ export default {
     },
     showSlides() {
       this.changeSlide(1);
-    }
+    },
+    selectGenre(genre) {
+      console.log("Selected genre:", genre);
+    },
   },
   mounted() {
-    setInterval(this.showSlides, 3000); // Change slide every 3 seconds
-  }
+    setInterval(this.showSlides, 3000);
+  },
 };
-// SLIDER BEIGAS SLIDER BEIGAS SLIDER BEIGAS SLIDER BEIGAS SLIDER BEIGAS
 </script>
 
 <style scoped>
@@ -239,7 +244,7 @@ export default {
   text-align: left; /* Teksts ir kreisajā pusē */
   margin-left: 0; /* Atstāj nulles attālumu no kreisās malas */
   padding-left: 20px; /* Nedaudz ievilkums, lai nebūtu tieši pie malas */
-  color: rgb(3, 1, 1); /* Teksta krāsa */
+  color: #213555; /* Teksta krāsa */
   position: relative; /* Lai varētu izmantot pseido-elementu */
 
   /* Līnija zem teksta */
@@ -248,12 +253,51 @@ export default {
 .virsraksti::after {
   content: "";
   position: absolute;
-  bottom: -10px; /* Attālums no teksta līdz līnijai */
-  left: 0;
-  width: 100%;
+  bottom: 10px; /* Attālums no teksta līdz līnijai */
+  margin-left: 20px; /* Increase the margin to move the line to the right */
+  width: 40%;
   height: 2px; /* Līnijas biezums */
-  background-color: rgb(3, 1, 1); /* Līnijas krāsa */
+  background-color: #213555; /* Līnijas krāsa */
+}
+.genre-section {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin: 30px 20px;
 }
 
+.genre-card {
+  width: 180px;
+  height: 250px;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.genre-card:hover {
+  transform: scale(1.05);
+}
+
+.genre-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.genre-name {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  text-align: center;
+  padding: 10px;
+  font-size: 18px;
+  font-weight: bold;
+}
 
 </style>
