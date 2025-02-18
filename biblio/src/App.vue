@@ -4,29 +4,42 @@ import HelloWorld from './components/HelloWorld.vue'
 </script>
 
 <template>
-  <!-- <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header> -->
-
-  <RouterView />
+  <div id="app">
+    <Navbar v-if="showNavbar" />
+    <router-view />
+    <Footer v-if="showNavbar" />
+  </div>
 </template>
 
+<script>
+import Navbar from "./components/Navbar.vue";
+import Footer from "./components/Footer.vue";
+import { useRoute } from "vue-router";
+import { computed } from "vue";
+
+export default {
+  components: {
+    Navbar,
+    Footer
+  },
+  setup() {
+    const route = useRoute();
+
+    // Hide navbar & footer on login page
+    const showNavbar = computed(() => route.path !== "/login");
+    
+
+    return { showNavbar };
+  }
+};
+</script>
+
 <style>
-body, html {
+/* Global styles */
+body {
+  font-family: 'Montserrat', sans-serif;
   margin: 0;
   padding: 0;
-  height: 100%;
-  background-color: #F5EFE7;
-  font-family: "Fira Sans", serif;
-  font-weight: 50;
+  background-color: #f6f5f7;
 }
 </style>
